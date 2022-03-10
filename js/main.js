@@ -126,7 +126,7 @@ function decreaseSlider(){
 
     counterMain--;
 
-    counterThumbnails--;
+    
 
     if(counterMain < 0){
         counterMain = (stadium.length - 1);
@@ -141,9 +141,13 @@ function decreaseSlider(){
     thumbnails[(counterThumbnails)].classList.remove("active");
     thumbnails[counterMain].classList.add("active");
 
-    if(counterThumbnails == 0){
-        counterThumbnails = (stadium.length);
+    
+
+    if(counterThumbnails <= 0){
+        counterThumbnails = ((stadium.length));
     }
+
+    counterThumbnails--;
 
 }
 
