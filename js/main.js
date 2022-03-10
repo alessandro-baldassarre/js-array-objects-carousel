@@ -63,6 +63,22 @@ const thumbnailsCarousel = document.querySelector(".my-thumbnails");
 
 thumbnailsCarousel.classList.add("d-flex", "shadow");
 
+const optionScroll = document.getElementById("my-after-carousel");
+
+optionScroll.classList.add("d-flex", "justify-content-center", "p-0","position-absolute");
+
+optionScroll.innerHTML = `<div class="form-check form-switch col-2">
+<input class="form-check-input ps-5 position-relative" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+<label class="form-check-label" for="flexSwitchCheckDefault">Invert Scroll</label>
+</div>`;
+
+const titlePage = document.getElementById("my-before-carousel");
+titlePage.innerHTML = `<h1>The Most Expensive NFL Stadiums</h1>`
+
+const mainContainer = document.querySelector(".p-5");
+mainContainer.classList.remove("p-5");
+mainContainer.classList.add("pt-4");
+
 let counterMain = 0;
 
 let counterThumbnails = 0;
@@ -111,10 +127,6 @@ function advanceSlider(){
     }
 
 
-
-
-
-
 }
 
 document.querySelector(".my-previous").addEventListener("click", function(){
@@ -151,4 +163,22 @@ function decreaseSlider(){
 
 }
 
-const advanceInterval = setInterval(advanceSlider,2000);
+const advanceInterval = setInterval(advanceSlider, 2000);
+
+
+
+const inputInverse = document.querySelector(".form-check-input");
+
+
+inputInverse.addEventListener('change', function() {
+
+
+    if(!this.checked){
+        location.reload();
+    }else{
+        clearInterval(advanceInterval);
+        setInterval(decreaseSlider,2000);
+    }
+
+
+});
