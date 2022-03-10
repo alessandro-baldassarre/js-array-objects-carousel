@@ -63,7 +63,9 @@ const thumbnailsCarousel = document.querySelector(".my-thumbnails");
 
 thumbnailsCarousel.classList.add("d-flex", "shadow");
 
-let counter = 0;
+let counterMain = 0;
+
+let counterThumbnails = 0;
 
 for ( let i = 0; i < stadium.length; i++){
 
@@ -80,41 +82,69 @@ const thumbnails = document.querySelectorAll(".single-thumbnail");
 thumbnails[0].classList.add("active");
 
 document.querySelector(".my-next").addEventListener("click", function(){
+
+    clearInterval(advanceInterval);
     advanceSlider();
 })
 
 function advanceSlider(){
 
-    counter++;
+    counterMain++;
 
-    if(counter >= stadium.length){
-        counter = 0;
+    counterThumbnails++;
+
+    if(counterMain >= stadium.length){
+        counterMain = 0;
+        counterThumbnails = stadium.length;
     }
 
-    mainCarousel.innerHTML = `<img src="${stadium[counter].image}" alt="image of ${stadium[counter].description}">`;
+    mainCarousel.innerHTML = `<img src="${stadium[counterMain].image}" alt="image of ${stadium[counterMain].description}">`;
 
-    descriptionMainCarousel.innerHTML = `${stadium[counter].description}`;
+    descriptionMainCarousel.innerHTML = `${stadium[counterMain].description}`;
     mainCarousel.appendChild(descriptionMainCarousel);
+
+    thumbnails[(counterThumbnails - 1)].classList.remove("active");
+    thumbnails[counterMain].classList.add("active");
+
+    if(counterThumbnails == stadium.length){
+        counterThumbnails = 0;
+    }
+
+
+
+
 
 
 }
 
 document.querySelector(".my-previous").addEventListener("click", function(){
+    clearInterval(advanceInterval);
     decreaseSlider();
 })
 
 function decreaseSlider(){
 
-    counter--;
+    counterMain--;
 
-    if(counter < 0){
-        counter = (stadium.length - 1);
+    counterThumbnails--;
+
+    if(counterMain < 0){
+        counterMain = (stadium.length - 1);
+        counterThumbnails = 0;
     }
 
-    mainCarousel.innerHTML = `<img src="${stadium[counter].image}" alt="image of ${stadium[counter].description}">`;
+    mainCarousel.innerHTML = `<img src="${stadium[counterMain].image}" alt="image of ${stadium[counterMain].description}">`;
 
-    descriptionMainCarousel.innerHTML = `${stadium[counter].description}`;
+    descriptionMainCarousel.innerHTML = `${stadium[counterMain].description}`;
     mainCarousel.appendChild(descriptionMainCarousel);
 
+    thumbnails[(counterThumbnails)].classList.remove("active");
+    thumbnails[counterMain].classList.add("active");
+
+    if(counterThumbnails == 0){
+        counterThumbnails = (stadium.length);
+    }
 
 }
+
+const advanceInterval = setInterval(advanceSlider,2000);
